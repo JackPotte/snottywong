@@ -148,7 +148,7 @@ This tool shows the common pages that two or more editors have both edited, sort
         editcounts = {}
 
         for user in userlist:
-            cursor.execute("SELECT COUNT(*) FROM revision WHERE rev_user_text=%s;", (user))
+            cursor.execute("SELECT COUNT(*) FROM revision_userindex WHERE rev_user_text=%s;", (user))
             editcounts[user] = cursor.fetchall()[0][0]
             print "<b>" + user + "</b> edit count: " + str(editcounts[user]) + (" (only most recent " + str(editlimit) + " edits will be analyzed)<br>" if editcounts[user] > editlimit else "<br>")
 

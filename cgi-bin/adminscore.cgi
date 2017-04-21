@@ -27,7 +27,7 @@ SQL Queries:
             select page_len from page where page_namespace=2 and page_title="Scottywong";
 
     - Edits without an edit summary:
-            select count(*) from revision where rev_user_text="Scottywong" and rev_comment="";
+            SELECT COUNT(*) FROM revision_userindex WHERE rev_user_text='Scottywong' and rev_comment='';
 
     - Active in the last x months
             SELECT COUNT(*) FROM revision JOIN user ON rev_user=user_id WHERE user_name=%s and rev_timestamp>"stuff" and rev_timestamp<"things";
@@ -339,7 +339,8 @@ def activity(sql, name):
         mintimestamp = str(year) + ("0" if month<10 else "") + str(month) + "01000000"
         maxtimestamp = str(year) + ("0" if month<10 else "") + str(month) + "31235959"
         #sql.execute("SELECT COUNT(*) FROM revision WHERE rev_user_text=%s AND rev_timestamp>%s and rev_timestamp<%s;", (name, mintimestamp, maxtimestamp))
-        sql.execute("SELECT COUNT(*) FROM revision WHERE rev_user_text='{0}' AND rev_timestamp>{1} and rev_timestamp<{2};".format(name, mintimestamp, maxtimestamp))
+        #sql.execute("SELECT COUNT(*) FROM revision WHERE rev_user_text='{0}' AND rev_timestamp>{1} and rev_timestamp<{2};".format(name, mintimestamp, maxtimestamp))
+        sql.execute("SELECT COUNT(*) FROM revision_userindex WHERE rev_user_text='{0}' AND rev_timestamp>{1} and rev_timestamp<{2};".format(name, mintimestamp, maxtimestamp))
         monthcount = sql.fetchall()[0][0]
         monthlyedits.append(int(monthcount))
     avg = sum(monthlyedits)/float(len(monthlyedits))

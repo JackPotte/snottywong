@@ -207,7 +207,7 @@ def APIfirsteditor(p):
 
 def getEditCount(username, cursor):
     try:
-        cursor.execute("SELECT COUNT(*) FROM revision WHERE rev_user_text=%s;", (username))
+        cursor.execute("SELECT COUNT(*) FROM revision_userindex WHERE rev_user_text=%s;", (username))
         ec = cursor.fetchall()[0][0]
         return int(ec)
     except:
